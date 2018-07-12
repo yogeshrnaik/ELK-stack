@@ -148,4 +148,5 @@ Go to: http://localhost:5601/ in order to verify if Kibana is running or not.
 
 If you stop Elastic Search service and go to Kibana > Management page, you can see the status as Red (see screen-shot below).
 
-![Kibana Status](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/kibana-without-elasticsearch-running.jpg)
+![Kibana Status](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/kibana-without-elasticsearch-running.png)
+
