@@ -206,3 +206,17 @@ For example, to check the health of Cluster, type following command in SENSE app
 When you click on the Play icon next to this command, you can see the response in adjacent window.
 
 ![enter image description here](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/cluster_health.jpg)
+
+The response is JSON and is normally human readable to most of the people. 
+
+Using CAT API we can align the JSON properly and make it more human readable.
+Open http://localhost:9200/_cat/health?v in any browswe window and it will show a table with the health status.
+
+    epoch      timestamp cluster status node.total node.data shards pri relo init unassign pending_tasks max_task_wait_time active_shards_percent
+    1531392586 16:19:46  Packt   yellow          1         1     26  26    0    0       25             0                  -                 51.0%
+
+We can get details of the nodes using:
+
+    GET _nodes
+
+#### Example of Indices API
