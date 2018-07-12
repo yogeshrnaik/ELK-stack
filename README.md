@@ -7,9 +7,9 @@
 Download Zip from https://www.elastic.co/downloads/elasticsearch and extract it somewhere on computer
 
 Go to folder where you have extracted Elastic Search and go to config folder of the installation:
-C:\DDrive\MyData\SWs\Elastic\elasticsearch-6.2.4\config
+E.g. C:\DDrive\MyData\SWs\Elastic\elasticsearch-6.2.4\config
 
-Edit elasticsearch.yml
+Edit elasticsearch.yml and edit following entries. You can choose any name you want.
 cluster.name: Packt
 node.name: Packtnode
 
@@ -106,10 +106,13 @@ Type command:
     C:\DDrive\MyData\SWs\Elastic\nssm-2.24\win64>nssm install Logstash
 
 This will open following prompt.
+
 ![nssm](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/nssm.jpg)
+
 
 Select the path of "C:\DDrive\MyData\SWs\Elastic\logstash-6.2.4\bin\logstash.bat" file for Path.
 Enter the argument as shown in screen shot below.
+
 ![Logstash](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/nssm-logstash.jpg)
 
 And then click on "Install service". Once installed successfully, you can verify under "Services" that Logstash is installed as a service.
@@ -134,6 +137,7 @@ Type command:
     C:\DDrive\MyData\SWs\Elastic\nssm-2.24\win64>nssm install Kibana
 
 This will open following prompt.
+
 ![nssm](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/nssm.jpg)
 
 Select the path of "C:\DDrive\MyData\SWs\Elastic\kibana-6.2.4-windows-x86_64\bin\kibana.bat" file for Path.
