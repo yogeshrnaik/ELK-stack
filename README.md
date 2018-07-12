@@ -1,3 +1,5 @@
+
+
 # Install Elastic Search on Computer
 
 **Pre-requisite:** Latest JDK
@@ -93,4 +95,57 @@ Then test this conf file using command:
 
 If you get any error make sure you have correct version of JDK and JRE on classpath, compatible with Logstash version you are running.
 
+## Install Logstash using NSSM
+Go to appropriate folder where NSSM is downloaded.
+Go to folder for your OS type.
+E.g. C:\DDrive\MyData\SWs\Elastic\nssm-2.24\win64
+Open command prompt (in Admin mode) in this folder.
 
+Type command:
+
+    C:\DDrive\MyData\SWs\Elastic\nssm-2.24\win64>nssm install Logstash
+
+This will open following prompt.
+![nssm](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/nssm.jpg)
+
+Select the path of "C:\DDrive\MyData\SWs\Elastic\logstash-6.2.4\bin\logstash.bat" file for Path.
+Enter the argument as shown in screen shot below.
+![Logstash](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/nssm-logstash.jpg)
+
+And then click on "Install service". Once installed successfully, you can verify under "Services" that Logstash is installed as a service.
+
+You can start the Logstash Service from Services.
+
+To test if Logstash Pipeline works, open the file "logstash-input.log" and add new entries in this file.
+If everything works ok, then you should see entries reflected in "logstash-output.log"
+
+    {"@timestamp":"2018-07-12T08:04:54.967Z","message":"Hello Elastic Stack\r","@version":"1","host":"IN1WXL-301034","path":"C:\\DDrive\\MyData\\SWs\\Elastic\\logstash-input.log"}
+    {"@timestamp":"2018-07-12T08:05:23.219Z","message":"Hello Logstash\r","@version":"1","host":"IN1WXL-301034","path":"C:\\DDrive\\MyData\\SWs\\Elastic\\logstash-input.log"}
+    {"@timestamp":"2018-07-12T08:06:22.648Z","message":"Hello Kibana\r","@version":"1","host":"IN1WXL-301034","path":"C:\\DDrive\\MyData\\SWs\\Elastic\\logstash-input.log"}
+
+# Install Logstash using NSSM
+Go to appropriate folder where NSSM is downloaded.
+Go to folder for your OS type.
+E.g. C:\DDrive\MyData\SWs\Elastic\nssm-2.24\win64
+Open command prompt (in Admin mode) in this folder.
+
+Type command:
+
+    C:\DDrive\MyData\SWs\Elastic\nssm-2.24\win64>nssm install Kibana
+
+This will open following prompt.
+![nssm](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/nssm.jpg)
+
+Select the path of "C:\DDrive\MyData\SWs\Elastic\kibana-6.2.4-windows-x86_64\bin\kibana.bat" file for Path.
+
+Enter the argument as shown in screen shot below.
+![Kibana](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/nssm-kibana.jpg)
+
+And then click on "Install service". Once installed successfully, you can verify under "Services" that Kibana is installed as a service.
+
+You can start the Kibana Service from Services.
+Go to: http://localhost:5601/ in order to verify if Kibana is running or not.
+
+If you stop Elastic Search service and go to Kibana > Management page, you can see the status as Red (see screen-shot below).
+
+![Kibana Status](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/kibana-without-elasticsearch-running.jpg)
