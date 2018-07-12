@@ -22,7 +22,8 @@ And run batch file: elasticsearch-service.bat
 C:\DDrive\MyData\SWs\Elastic\elasticsearch-6.2.4\bin>elasticsearch-service.bat install
 Installing service      :  "elasticsearch-service-x64"
 Using JAVA_HOME (64-bit):  "C:\Program Files\Java\jdk-9.0.4" -Xms1g;-Xmx1g;-XX:+UseConcMarkSweepGC;-XX:CMSInitiatingOccupancyFraction=75;-XX:+UseCMSInitiatingOccupancyOnly;-XX:+AlwaysPreTouch;-Xss1m;-Djava.awt.headless=true;-Dfile.encoding=UTF-8;-Djna.nosys=true;-XX:-OmitStackTraceInFastThrow;-Dio.netty.noUnsafe=true;-Dio.netty.noKeySetOptimization=true;-Dio.netty.recycler.maxCapacityPerThread=0;-Dlog4j.shutdownHookEnabled=false;-Dlog4j2.disable.jmx=true;-Djava.io.tmpdir=C:\Users\naiky\AppData\Local\Temp\elasticsearch;-XX:+HeapDumpOnOutOfMemoryError;-Xlog:gc*,gc+age=trace,safepoint:file=logs/gc.log:utctime,pid,tags:filecount=32,filesize=64m;-Djava.locale.providers=COMPAT
-    The service 'elasticsearch-service-x64' has been installed.
+
+The service 'elasticsearch-service-x64' has been installed.
 ```
 
 You should see elasticsearch-service-x64 under "Services".
@@ -73,21 +74,21 @@ Create a file called "LogstashPipeline.conf" under "bin" folder of Logstash.
 C:\DDrive\MyData\SWs\Elastic\logstash-6.2.4\bin
 
 ```javascript
-    input 
-    {
-	    file 
-		{
-			path => "C:\DDrive\MyData\SWs\Elastic\logstash-input.log"
-			start_position => "beginning"
-		}
-	}
-	output
+input 
+{
+	file 
 	{
-		file 
-		{
-			path => "C:\DDrive\MyData\SWs\Elastic\logstash-output.log"
-		}	
+		path => "C:\DDrive\MyData\SWs\Elastic\logstash-input.log"
+		start_position => "beginning"
 	}
+}
+output
+{
+	file 
+	{
+		path => "C:\DDrive\MyData\SWs\Elastic\logstash-output.log"
+	}	
+}
 ```
 
 Then test this conf file using command:
@@ -229,6 +230,7 @@ Open http://localhost:9200/_cat/health?v in any browser window and it will show 
 epoch      timestamp cluster status node.total node.data shards pri relo init unassign pending_tasks max_task_wait_time active_shards_percent
 1531392586 16:19:46  Packt   yellow          1         1     26  26    0    0       25             0                  -                 51.0%
 ```
+
 We can get details of the nodes using:
 ```
 GET _nodes
@@ -252,6 +254,7 @@ PUT movies
 ```
 
 This will create index called "movies".
+
 Response:
 
 ```javascript
@@ -261,3 +264,17 @@ Response:
   "index": "movies"
 }
 ```
+
+#### Query DSL and Mapping
+Query DSL is JSON style domain-specific language that is used to execute queries in Elastic Search.
+
+Structure of query:
+```javascript
+QUERY_NAME: {
+	FIELD_NAME: {
+		ARGUMENT: VALUE,
+		ARGUMENT: VALUE, ...
+	}
+}
+```
+
