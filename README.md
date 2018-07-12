@@ -1,5 +1,4 @@
 
-
 # Install Elastic Search on Computer
 
 **Pre-requisite:** Latest JDK
@@ -56,6 +55,7 @@ Response:
 **Pre-requisite:** Latest JDK
 
 Download Logstash zip from https://www.elastic.co/downloads/logstash
+
 Download Kibana zip from https://www.elastic.co/downloads/kibana
 
 For Windows, the option to run Logstash and Kibana as a service isn't available by default.
@@ -155,3 +155,31 @@ If you stop Elastic Search service and go to Kibana > Management page, you can s
 
 ![Kibana Status](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/kibana-without-elasticsearch-running.png)
 
+# Elastic Search Concepts
+## Cluster and Node
+We can create cluster of Elastic Search nodes to create highly available environment.
+
+To create a cluster of Elastic Search nodes, in "elasticsearch.yml" file we have to mention the "cluster.name" and "node.name" params before starting Elastic Search.
+
+**Types of Nodes in Elastic Search**
+ - Master
+	 - Works as Supervisor all other nodes in same cluster. 
+	 - Responsible for creating/deleting index, tracking which nodes are part of cluster, allocation of shards to other nodes.
+
+- Master eligible node
+	- There is a property in "elasticsearch.yml" called "node.master"
+	- This property is true by default. 
+	- If true, it means the node can be elected as master node
+	- If current master node fails, then all nodes in cluster go through a process called "Master election" and they choose one of the master eligible nodes as their master.
+
+- Data node
+	- This node holds data and performs data related operations such as CRUD, search and aggregation
+	- To make a node as Data node, the property in "elasticsearch.yml" called "node.data" must be set to true. This property is by default true.
+
+- Ingest node
+	- This node pre-processes the document before actual indexing takes place.
+	- To make a node as Ingest node, the property in "elasticsearch.yml" called "node.ingest" must be set to true. This property is by default true.
+
+- Tribe node
+	- It is special type of node and used for coordination purpose only.
+	- This node can connect to multiple clusters and can perform search and other operations across connected clusters.
