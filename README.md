@@ -1,4 +1,6 @@
 
+
+
 # Install Elastic Search on Computer
 
 **Pre-requisite:** Latest JDK
@@ -161,25 +163,46 @@ We can create cluster of Elastic Search nodes to create highly available environ
 
 To create a cluster of Elastic Search nodes, in "elasticsearch.yml" file we have to mention the "cluster.name" and "node.name" params before starting Elastic Search.
 
-**Types of Nodes in Elastic Search**
- - Master
+#### Types of Nodes in Elastic Search
+ - **Master**
 	 - Works as Supervisor all other nodes in same cluster. 
 	 - Responsible for creating/deleting index, tracking which nodes are part of cluster, allocation of shards to other nodes.
 
-- Master eligible node
+- **Master eligible node**
 	- There is a property in "elasticsearch.yml" called "node.master"
 	- This property is true by default. 
 	- If true, it means the node can be elected as master node
 	- If current master node fails, then all nodes in cluster go through a process called "Master election" and they choose one of the master eligible nodes as their master.
 
-- Data node
+- **Data node**
 	- This node holds data and performs data related operations such as CRUD, search and aggregation
 	- To make a node as Data node, the property in "elasticsearch.yml" called "node.data" must be set to true. This property is by default true.
 
-- Ingest node
+- **Ingest node**
 	- This node pre-processes the document before actual indexing takes place.
 	- To make a node as Ingest node, the property in "elasticsearch.yml" called "node.ingest" must be set to true. This property is by default true.
 
-- Tribe node
+- **Tribe node**
 	- It is special type of node and used for coordination purpose only.
 	- This node can connect to multiple clusters and can perform search and other operations across connected clusters.
+
+## Elastic Search API
+Elastic Search provides a rich API to perform all kinds of operations. 
+These APIs are mainly classified into following types:
+
+ 1. Cluster APIs
+ 2. Indices APIs
+ 3. Document APIs
+ 4. CAT APIs - Used to provide human readable response
+ 5. Search APIs - Used to search across index
+
+#### Example of Cluster API
+Go to Kibana URL http://localhost:5601 and go to Dev Tools to access SENSE application.
+SENSE application is used to try out different APIs.
+For example, to check the health of Cluster, type following command in SENSE application.
+
+    GET _cluster/health
+
+When you click on the Play icon next to this command, you can see the response in adjacent window.
+
+![enter image description here](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/cluster_health.jpg)
