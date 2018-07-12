@@ -10,8 +10,9 @@ Go to folder where you have extracted Elastic Search and go to config folder of 
 E.g. C:\DDrive\MyData\SWs\Elastic\elasticsearch-6.2.4\config
 
 Edit elasticsearch.yml and edit following entries. You can choose any name you want.
-cluster.name: Packt
-node.name: Packtnode
+
+    cluster.name: Packt
+    node.name: Packtnode
 
 Open command prompt in: 
 C:\DDrive\MyData\SWs\Elastic\elasticsearch-6.2.4\bin
