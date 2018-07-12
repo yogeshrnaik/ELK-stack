@@ -139,7 +139,7 @@ If everything works ok, then you should see entries reflected in "logstash-outpu
 {"@timestamp":"2018-07-12T08:06:22.648Z","message":"Hello Kibana\r","@version":"1","host":"IN1WXL-301034","path":"C:\\DDrive\\MyData\\SWs\\Elastic\\logstash-input.log"}
 ```
 
-# Install Logstash using NSSM
+# Install Kibana using NSSM
 Go to appropriate folder where NSSM is downloaded.
 Go to folder for your OS type.
 E.g. C:\DDrive\MyData\SWs\Elastic\nssm-2.24\win64
