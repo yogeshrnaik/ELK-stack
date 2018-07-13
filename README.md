@@ -375,4 +375,61 @@ Elastic search supports scripting in different languages.
 	- Java
 
 #### Example of Scripting
-TBA
+Example of documents in Bank index are shown below.
+
+```javascript
+{ "_index": "bank", "_type": "account", "_id": "25", "_score": 1, 
+"_source": {"account_number": 25, "balance": 40540, "firstname": "Virginia", "lastname": "Ayala", "age": 39, "gender": "F", "address": "171 Putnam Avenue", "employer": "Filodyne", "email": "virginiaayala@filodyne.com", "city": "Nicholson", "state": "PA" }
+}
+
+{ "_index": "bank", "_type": "account", "_id": "44", "_score": 1, 
+"_source": {"account_number": 44, "balance": 34487, "firstname": "Aurelia", "lastname": "Harding", "age": 37, "gender": "M", "address": "502 Baycliff Terrace", "employer": "Orbalix", "email": "aureliaharding@orbalix.com", "city": "Yardville", "state": "DE" }
+}
+
+{ "_index": "bank", "_type": "account", "_id": "99", "_score": 1, 
+"_source": { "account_number": 99, "balance": 47159, "firstname": "Ratliff", "lastname": "Heath", "age": 39, "gender": "F", "address": "806 Rockwell Place", "employer": "Zappix", "email": "ratliffheath@zappix.com", "city": "Shaft", "state": "ND" }
+}
+```
+
+In the following example, we subtract 2 from "age" present in every document in the "bank" index.
+We use inline scriping in this case.
+```javascript
+GET bank/_search
+{
+  "script_fields": {
+    "age": {
+      "script": {
+        "lang": "expression",
+        "inline": "doc['age'] - subtractor",
+        "params": {"subtractor": 2}
+      }
+    }
+  }
+}
+```
+
+Response:
+
+```javascript
+#! Deprecation: Deprecated field [inline] used, expected [source] instead
+{
+  "took": 1,
+  "timed_out": false,
+  "_shards": { "total": 5, "successful": 5, "skipped": 0, "failed": 0
+  },
+  "hits": { "total": 1000, "max_score": 1, "hits": [
+      { "_index": "bank", "_type": "account", "_id": "25", "_score": 1, "fields": { "age": [37] } },
+      { "_index": "bank", "_type": "account", "_id": "44", "_score": 1, "fields": { "age": [35] } },
+      { "_index": "bank", "_type": "account", "_id": "99", "_score": 1, "fields": { "age": [37] } },
+      { "_index": "bank", "_type": "account", "_id": "119", "_score": 1, "fields": { "age": [26] } },
+      { "_index": "bank", "_type": "account", "_id": "126", "_score": 1, "fields": { "age": [37] } },
+      { "_index": "bank", "_type": "account", "_id": "145", "_score": 1, "fields": { "age": [30] } },
+      { "_index": "bank", "_type": "account", "_id": "183", "_score": 1, "fields": { "age": [24] } },
+      { "_index": "bank", "_type": "account", "_id": "190", "_score": 1, "fields": { "age": [28] } },
+      { "_index": "bank", "_type": "account", "_id": "208", "_score": 1, "fields": { "age": [24] } },
+      { "_index": "bank", "_type": "account", "_id": "222", "_score": 1, "fields": { "age": [34] } }
+    ]
+  }
+}
+```
+
