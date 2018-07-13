@@ -296,3 +296,66 @@ QUERY_NAME: { // MANDATORY
  - Geo Query
  - Specialized Query
  - Span Query
+
+### Inverted Index
+TBA
+
+### Analyzers
+We can specifiy different types of analyzers for fields when building the index.
+
+##### Whitespace analyzer
+The "whitespace" analyzer will split the text on whitespace (space, tabs, newlines).
+```javascript
+POST _analyze
+{
+  "analyzer": "whitespace",
+  "text": "Elastic search\nis the heart of ELK stack and\t it uses inverted index."
+}
+```
+
+Response is as follows when using "whitespace" analyzer.
+
+```javascript
+{
+  "tokens": [
+    { "token": "Elastic",      "start_offset": 0,      "end_offset": 7,      "type": "word",      "position": 0 },
+    { "token": "search",      "start_offset": 8,      "end_offset": 14,      "type": "word",      "position": 1 },
+    { "token": "is",      "start_offset": 15,      "end_offset": 17,      "type": "word",      "position": 2    },
+    { "token": "the",      "start_offset": 18,      "end_offset": 21,      "type": "word",      "position": 3    },
+    { "token": "heart",      "start_offset": 22,      "end_offset": 27,      "type": "word",      "position": 4    },
+    { "token": "of",      "start_offset": 28,      "end_offset": 30,      "type": "word",      "position": 5    },
+    { "token": "ELK",      "start_offset": 31,      "end_offset": 34,      "type": "word",      "position": 6    },
+    { "token": "stack",      "start_offset": 35,      "end_offset": 40,      "type": "word",      "position": 7    },
+    { "token": "and",      "start_offset": 41,      "end_offset": 44,      "type": "word",      "position": 8    },
+    { "token": "it",      "start_offset": 46,      "end_offset": 48,      "type": "word",      "position": 9    },
+    { "token": "uses",      "start_offset": 49,      "end_offset": 53,      "type": "word",      "position": 10    },
+    { "token": "inverted",      "start_offset": 54,      "end_offset": 62,      "type": "word",      "position": 11    },
+    {"token": "index.",      "start_offset": 63,      "end_offset": 69,      "type": "word",      "position": 12    }
+  ]
+}
+```
+
+##### Stop analyzer
+The "stop" analyzer will removes the stop words (like is, the, of, it, and) from the text.
+```javascript
+POST _analyze
+{
+  "analyzer": "stop",
+  "text": "Elastic search\nis the heart of ELK stack and\t it uses inverted index."
+}
+```
+Response is as follows when using "stop" analyzer.
+```javascript
+{
+  "tokens": [
+    { "token": "elastic", "start_offset": 0, "end_offset": 7, "type": "word", "position": 0 },
+    {"token": "search", "start_offset": 8, "end_offset": 14, "type": "word", "position": 1 },
+    { "token": "heart", "start_offset": 22, "end_offset": 27, "type": "word", "position": 4 },
+    { "token": "elk", "start_offset": 31, "end_offset": 34, "type": "word", "position": 6 },
+    { "token": "stack", "start_offset": 35, "end_offset": 40, "type": "word", "position": 7 },
+    { "token": "uses", "start_offset": 49, "end_offset": 53, "type": "word", "position": 10 },
+    { "token": "inverted", "start_offset": 54, "end_offset": 62, "type": "word", "position": 11 },
+    { "token": "index", "start_offset": 63, "end_offset": 68, "type": "word", "position": 12 }
+  ]
+}
+```
