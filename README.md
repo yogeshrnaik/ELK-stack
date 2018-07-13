@@ -1,3 +1,5 @@
+
+
 # Install Elastic Search on Computer
 
 **Pre-requisite:** Latest JDK
@@ -433,3 +435,40 @@ Response:
 }
 ```
 
+# Logstash
+Logstash can be used to collect, parse and transform data.
+
+## Stashing with Logstash
+Logstash pipeline has three stages.
+Source -> INPUT -> FILTER -> OUTPUT -> Destination
+
+- Input
+	- Input stage generates the event
+		
+- Filter
+	- Filter will modify the event
+	- This is optional
+	
+- Output
+	- Ships to destination
+
+In following example, we will use the [summer.csv](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/input/summer.csv) which contains details regarding Olympic medal winners.
+
+### Load records in Elastic Search using Logstash
+Go to the bin folder under Logstash installation. <LOGSTASH_INSTALLATION>/bin
+e.g. C:\DDrive\MyData\SWs\Elastic\logstash-6.2.4\bin
+
+Create a new file "LogstashPipelineCSV.conf"
+
+Validate it using below command.
+```
+C:\DDrive\MyData\SWs\Elastic\logstash-6.2.4\bin>logstash -f "C:\DDrive\MyData\Yogesh\git_repo\ELK-stack\logstash\LogstashPipelineCSV.conf" --config.test_and_exit
+Sending Logstash's logs to C:/DDrive/MyData/SWs/Elastic/logstash-6.2.4/logs which is now configured via log4j2.properties
+[2018-07-13T15:33:36,745][INFO ][logstash.modules.scaffold] Initializing module {:module_name=>"fb_apache", :directory=>"C:/DDrive/MyData/SWs/Elastic/logstash-6.2.4/modules/fb_apache/configuration"}
+...
+[2018-07-13T15:33:36,795][INFO ][logstash.modules.scaffold] Initializing module {:module_name=>"netflow", :directory=>"C:/DDrive/MyData/SWs/Elastic/logstash-6.2.4/modules/netflow/configuration"}
+[2018-07-13T15:33:37,071][WARN ][logstash.config.source.multilocal] Ignoring the 'pipelines.yml' file because modules or command line options are specified
+Configuration OK
+[2018-07-13T15:33:40,905][INFO ][logstash.runner          ] Using config.test_and_exit mode. Config Validation Result: OK. Exiting Logstash
+
+```
