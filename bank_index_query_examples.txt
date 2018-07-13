@@ -1,0 +1,60 @@
+GET bank/account/_search
+{
+  "query": {
+    "range": {
+      "age": {
+        "gt": 35
+      }
+    }
+  }
+}
+
+GET bank/account/_search
+{
+  "query": {
+    "range": {
+      "account_number": {
+        "gte": 516,
+        "lte": 851,
+        "boost": 2
+      }
+    }
+  }
+}
+
+GET bank/account/_search
+{
+  "query": {
+    "terms": {
+      "account_number": [516,851]
+    }
+  }
+}
+
+GET bank/account/_search
+{
+  "query": {
+    "term": {
+      "account_number": 516
+    }
+  }
+}
+
+GET bank/account/_search
+{
+  "query": {
+    "term": {
+      "state": "RI"
+    }
+  }
+}
+
+GET bank/account/_search
+{
+  "query": {
+    "match": {
+      "state": "RI"
+    }
+  }
+}
+
