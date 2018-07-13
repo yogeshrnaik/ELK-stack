@@ -270,11 +270,29 @@ Query DSL is JSON style domain-specific language that is used to execute queries
 
 Structure of query:
 ```javascript
-QUERY_NAME: {
-	FIELD_NAME: {
+QUERY_NAME: { // MANDATORY
+	FIELD_NAME: { // OPTIONAL
 		ARGUMENT: VALUE,
 		ARGUMENT: VALUE, ...
 	}
 }
 ```
 
+#### Query (scoring) vs Filters (non scoring)
+| Query | Filters |
+|--|--|
+| Better for Full text search <br/> e.g. Title of a blog, summary, etc. where free text will be entered by user | Exact match on values <br/> e.g. language code, category, etc. where we have exact values with no special meaning |
+| How well does it match? Relevance | Does it match Yes or No. <br/> When  relevance does not matter |
+| For analyzed/tokenized data  | For non-analyzed data |
+| Not cacheable | Cacheable |
+| Slow compared to Filter | Faster |
+
+#### Types of Queries
+
+ - Full text Query
+ - Term level Query
+ - Compound Query
+ - Joining Query
+ - Geo Query
+ - Specialized Query
+ - Span Query
