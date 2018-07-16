@@ -528,7 +528,16 @@ Response will be:
 #### Check index in Kibana
 Launch Kibana (http://localhost:5601) and go to "Management > Index Patterns".
 Click on "Create Index Pattern" to create an index pattern for the Olympics data loaded in previous steps.
+
 Type "olympics*" in the "Index pattern" text box and click on "Next Step".
 
+![enter image description here](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/create-index-pattern-1.jpg)
 
+![enter image description here](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/create-index-pattern-2.jpg)
+
+Click on "Create Index pattern" to create the index pattern.
+
+You can go to Discover tab in Kibana and select the index pattern "olympics*" to see data that was loaded.
+
+![enter image description here](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/olympics-index.jpg)
 
