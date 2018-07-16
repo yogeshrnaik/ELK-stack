@@ -505,4 +505,30 @@ yellow open   movies              mGwrDjrUREG3UqcTnZnGYw   5   2          0     
 green  open   .kibana             j1lQlXTrRO6PPFnZvq3WVw   1   0          2            0      6.6kb          6.6kb
 yellow open   olympics-2018.07.16 5SPZHp0iRsKriNIl3S_5YA   5   1      31166            0     11.8mb         11.8mb
 ```
-The count of documents in summer.csv is 31166. Once "docs.count" in index matches this count, you can terminate the logstash process.
+The count of documents in summer.csv is 31166. 
+Once "docs.count" in index matches this count, you can terminate the logstash process.
+
+#### Deleting index
+If you run the above command again, it will load same documents again. So, there will be twice the number of documents. 
+
+You can delete the index before running the command again.
+
+Open Kibana (http://localhost:5601/) and go to "Dev Tools". 
+Type and run the following command to delete the index "olympics-2018.07.16".
+```
+DELETE olympics-2018.07.16
+```
+Response will be:
+```javascript
+{
+  "acknowledged": true
+}
+```
+
+#### Check index in Kibana
+Launch Kibana (http://localhost:5601) and go to "Management > Index Patterns".
+Click on "Create Index Pattern" to create an index pattern for the Olympics data loaded in previous steps.
+Type "olympics*" in the "Index pattern" text box and click on "Next Step".
+
+
+
