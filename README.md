@@ -673,4 +673,72 @@ Go to "http://localhost:9600/_node/plugins" see this list.
 
 ### Node stat API
 Open "http://localhost:9600/_node/stats" to see the Node stats.
+![enter image description here](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/node_stats.jpg)
 
+### Hot threads API
+Hot thread is a thread that has high CPU Usage and executes for a longer period of time.
+
+Using Hot thread API (http://localhost:9600/_node/hot_threads) we can retrieve the current hot threads running in Logstash.
+```javascript
+{
+	host: "IN1WXL-301034",
+	version: "6.2.4",
+	http_address: "127.0.0.1:9600",
+	id: "19dddf2f-31b7-4e46-88d5-5815bddf38db",
+	name: "IN1WXL-301034",
+	hot_threads: {
+		time: "2018-07-16T14:40:53+05:30",
+		busiest_threads: 3,
+		threads: [{
+			name: "LogStash::Runner",
+			thread_id: 1,
+			percent_of_cpu_time: 1.14,
+			state: "timed_waiting",
+			traces: ["java.lang.Object.wait(Native Method)",
+			"java.lang.Thread.join(Thread.java:1260)",
+			"org.jruby.internal.runtime.NativeThread.join(NativeThread.java:76)"]
+		},
+		{
+			name: "[main]<file",
+			thread_id: 35,
+			percent_of_cpu_time: 0.31,
+			state: "timed_waiting",
+			traces: ["sun.misc.Unsafe.park(Native Method)",
+			"java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)",
+			"java.util.concurrent.locks.AbstractQueuedSynchronizer.doAcquireSharedNanos(AbstractQueuedSynchronizer.java:1037)"]
+		},
+		{
+			name: "Ruby-0-Thread-1",
+			thread_id: 18,
+			percent_of_cpu_time: 0.1,
+			state: "timed_waiting",
+			path: "C:\DDrive\MyData\SWs\Elastic\logstash-6.2.4\lib\bootstrap\environment.rb:6",
+			traces: ["sun.misc.Unsafe.park(Native Method)",
+			"java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)",
+			"java.util.concurrent.locks.AbstractQueuedSynchronizer.doAcquireSharedNanos(AbstractQueuedSynchronizer.java:1037)"]
+		}]
+	}
+}
+```
+To make above response Human readable, use http://localhost:9600/_node/hot_threads?human=true
+```
+::: {}
+Hot threads at 2018-07-16T14:43:47+05:30, busiestThreads=3: 
+================================================================================
+1.06 % of cpu usage, state: timed_waiting, thread name: 'LogStash::Runner', thread id: 1 
+	java.lang.Object.wait(Native Method)
+	java.lang.Thread.join(Thread.java:1260)
+	org.jruby.internal.runtime.NativeThread.join(NativeThread.java:76)
+--------------------------------------------------------------------------------
+0.3 % of cpu usage, state: timed_waiting, thread name: '[main]<file', thread id: 35 
+	sun.misc.Unsafe.park(Native Method)
+	java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+	java.util.concurrent.locks.AbstractQueuedSynchronizer.doAcquireSharedNanos(AbstractQueuedSynchronizer.java:1037)
+--------------------------------------------------------------------------------
+0.09 % of cpu usage, state: timed_waiting, thread name: 'Ruby-0-Thread-1', thread id: 18 
+C:\DDrive\MyData\SWs\Elastic\logstash-6.2.4\lib\bootstrap\environment.rb:6
+	sun.misc.Unsafe.park(Native Method)
+	java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+	java.util.concurrent.locks.AbstractQueuedSynchronizer.doAcquireSharedNanos(AbstractQueuedSynchronizer.java:1037)
+--------------------------------------------------------------------------------
+```
