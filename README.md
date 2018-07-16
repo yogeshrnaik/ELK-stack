@@ -1,5 +1,6 @@
 
 
+
 # Install Elastic Search on Computer
 
 **Pre-requisite:** Latest JDK
@@ -458,7 +459,7 @@ In following example, we will use the [summer.csv](https://raw.githubusercontent
 Go to the bin folder under Logstash installation. <LOGSTASH_INSTALLATION>/bin
 e.g. C:\DDrive\MyData\SWs\Elastic\logstash-6.2.4\bin
 
-Create a new file "LogstashPipelineCSV.conf"
+Create a new file "[LogstashPipelineCSV.conf](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/logstash/LogstashPipelineCSV.conf)" to provide mapping for [summer.csv](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/input/summer.csv) file.
 
 Validate it using below command.
 ```
@@ -470,5 +471,38 @@ Sending Logstash's logs to C:/DDrive/MyData/SWs/Elastic/logstash-6.2.4/logs whic
 [2018-07-13T15:33:37,071][WARN ][logstash.config.source.multilocal] Ignoring the 'pipelines.yml' file because modules or command line options are specified
 Configuration OK
 [2018-07-13T15:33:40,905][INFO ][logstash.runner          ] Using config.test_and_exit mode. Config Validation Result: OK. Exiting Logstash
+```
+To create the Logstash pipeline, run the following command.
 
 ```
+C:\DDrive\MyData\SWs\Elastic\logstash-6.2.4\bin>logstash -f "C:\DDrive\MyData\Yogesh\git_repo\ELK-stack\logstash\LogstashPipelineCSV.conf"
+
+Sending Logstash's logs to C:/DDrive/MyData/SWs/Elastic/logstash-6.2.4/logs which is now configured via log4j2.properties
+[2018-07-16T11:44:47,517][INFO ][logstash.modules.scaffold] Initializing module {:module_name=>"fb_apache", :directory=>"C:/DDrive/MyData/SWs/Elastic/logstash-6.2.4/modules/fb_apache/configuration"}
+[2018-07-16T11:44:47,530][INFO ][logstash.modules.scaffold] Initializing module {:module_name=>"netflow", :directory=>"C:/DDrive/MyData/SWs/Elastic/logstash-6.2.4/modules/netflow/configuration"}
+[2018-07-16T11:44:47,680][WARN ][logstash.config.source.multilocal] Ignoring the 'pipelines.yml' file because modules or command line options are specified
+[2018-07-16T11:44:48,085][INFO ][logstash.runner          ] Starting Logstash {"logstash.version"=>"6.2.4"}
+[2018-07-16T11:44:48,456][INFO ][logstash.agent           ] Successfully started Logstash API endpoint {:port=>9600}
+[2018-07-16T11:44:50,730][INFO ][logstash.pipeline        ] Starting pipeline {:pipeline_id=>"main", "pipeline.workers"=>8, "pipeline.batch.size"=>125, "pipeline.batch.delay"=>50}
+[2018-07-16T11:44:51,075][INFO ][logstash.outputs.elasticsearch] Elasticsearch pool URLs updated {:changes=>{:removed=>[], :added=>[http://localhost:9200/]}}
+[2018-07-16T11:44:51,118][INFO ][logstash.outputs.elasticsearch] Running health check to see if an Elasticsearch connection is working {:healthcheck_url=>http://localhost:9200/, :path=>"/"}
+[2018-07-16T11:44:51,271][WARN ][logstash.outputs.elasticsearch] Restored connection to ES instance {:url=>"http://localhost:9200/"}
+[2018-07-16T11:44:51,317][INFO ][logstash.outputs.elasticsearch] ES Output version determined {:es_version=>6}
+[2018-07-16T11:44:51,320][WARN ][logstash.outputs.elasticsearch] Detected a 6.x and above cluster: the `type` event field won't be used to determine the document _type {:es_version=>6}
+[2018-07-16T11:44:51,333][INFO ][logstash.outputs.elasticsearch] Using mapping template from {:path=>nil}
+[2018-07-16T11:44:51,348][INFO ][logstash.outputs.elasticsearch] Attempting to install template {:manage_template=>{"template"=>"logstash-*", "version"=>60001, "settings"=>{"index.refresh_interval"=>"5s"}, "mappings"=>{"_default_"=>{"dynamic_templates"=>[{"message_field"=>{"path_match"=>"message", "match_mapping_type"=>"string", "mapping"=>{"type"=>"text", "norms"=>false}}}, {"string_fields"=>{"match"=>"*", "match_mapping_type"=>"string", "mapping"=>{"type"=>"text", "norms"=>false, "fields"=>{"keyword"=>{"type"=>"keyword", "ignore_above"=>256}}}}}], "properties"=>{"@timestamp"=>{"type"=>"date"}, "@version"=>{"type"=>"keyword"}, "geoip"=>{"dynamic"=>true, "properties"=>{"ip"=>{"type"=>"ip"}, "location"=>{"type"=>"geo_point"}, "latitude"=>{"type"=>"half_float"}, "longitude"=>{"type"=>"half_float"}}}}}}}}
+[2018-07-16T11:44:51,385][INFO ][logstash.outputs.elasticsearch] New Elasticsearch output {:class=>"LogStash::Outputs::ElasticSearch", :hosts=>["//localhost"]}
+[2018-07-16T11:44:52,031][INFO ][logstash.pipeline        ] Pipeline started successfully {:pipeline_id=>"main", :thread=>"#<Thread:0x19d325f0 sleep>"}
+[2018-07-16T11:44:52,096][INFO ][logstash.agent           ] Pipelines running {:count=>1, :pipelines=>["main"]}
+```
+
+Check the status of index "olympics-2018.07.16" by going to URL: http://localhost:9200/_cat/indices?v
+
+```
+health status index               uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+yellow open   bank                oXmgK5iVQ_uRDzTJ-WzGXQ   5   1       1000            0    475.1kb        475.1kb
+yellow open   movies              mGwrDjrUREG3UqcTnZnGYw   5   2          0            0      1.2kb          1.2kb
+green  open   .kibana             j1lQlXTrRO6PPFnZvq3WVw   1   0          2            0      6.6kb          6.6kb
+yellow open   olympics-2018.07.16 5SPZHp0iRsKriNIl3S_5YA   5   1      31166            0     11.8mb         11.8mb
+```
+The count of documents in summer.csv is 31166. Once "docs.count" in index matches this count, you can terminate the logstash process.
