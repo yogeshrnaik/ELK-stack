@@ -443,19 +443,51 @@ Logstash can be used to collect, parse and transform data.
 Logstash pipeline has three stages.
 Source -> INPUT -> FILTER -> OUTPUT -> Destination
 
-- Input
-	- Input stage generates the event
-		
-- Filter
-	- Filter will modify the event
-	- This is optional
-	
-- Output
-	- Ships to destination
+### Input Stage/Plugin
+	Input stage generates the event.
+	It enables a specific source of events to be read by Logstash. 
 
+Few example of input plugins are:
+ - Twitter plugin
+ - RabbitMQ plugin
+ - Kafka plugin
+ - Amazon SQS plugin
+
+### Filter Stage/Plugin
+	Filter is an intermediary process on an event.
+	Filter will modify the event.
+	This is optional
+
+Few examples of filter plugins are:
+- drop
+- split
+- json
+- xml
+- mutate
+
+### Output Stage/Plugin
+	- Output plugin is used in the final stage of Logstash pipeline. 
+	- It is used to send the event data to a specific destination.
+
+For each destination, normally there will be a output plugin that is to be used.
+Few examples of output plugin are:
+ - Elastic Search
+ - JIRA
+ - MongoDB
+
+### Codec Plugin
+	This plugin is used to change the data representation of an event and 
+	can be applied either in Input or Output stage.
+
+Few examples of Codec plugin are:
+ - avro
+ - cloudfront
+ - json
+ - multiline
+
+## Loading CSV file in ElasticSearch using Logstash
 In following example, we will use the [summer.csv](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/input/summer.csv) which contains details regarding Olympic medal winners.
 
-### Load records in Elastic Search using Logstash
 Go to the bin folder under Logstash installation. <LOGSTASH_INSTALLATION>/bin
 e.g. C:\DDrive\MyData\SWs\Elastic\logstash-6.2.4\bin
 
@@ -538,6 +570,107 @@ Type "olympics*" in the "Index pattern" text box and click on "Next Step".
 Click on "Create Index pattern" to create the index pattern.
 
 You can go to Discover tab in Kibana and select the index pattern "olympics*" to see data that was loaded.
-
 ![enter image description here](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/olympics-index.jpg)
+
+## APIs for Logstash
+There are different types of monitoring APIs provided by Logstash.  Using these APIs, we can monitor the Logstash pipelines. 
+
+The APIs for Logstash is categorized into four groups.
+
+ - Node info API
+ - Plugins info API
+ - Node stats API 
+ - Hot threads API
+
+We will use a browser to test these APIs as all these API call are using GET method.
+If Logstash is not running, start it from "Services".
+
+### Node info API
+Open "http://localhost:9600/?pretty=true" in browser and you can see response as below.
+```javascript
+{
+	host: "IN1WXL-301034",
+	version: "6.2.4",
+	http_address: "127.0.0.1:9600",
+	id: "19dddf2f-31b7-4e46-88d5-5815bddf38db",
+	name: "IN1WXL-301034",
+	build_date: "2018-04-12T22:29:17Z",
+	build_sha: "a425a422e03087ac34ad6949f7c95ec6d27faf14",
+	build_snapshot: false
+}
+```
+Go to "http://localhost:9600/_node" to see details about the node on which Logstash is running.
+
+```javascript
+{
+	host: "IN1WXL-301034",
+	version: "6.2.4",
+	http_address: "127.0.0.1:9600",
+	id: "19dddf2f-31b7-4e46-88d5-5815bddf38db",
+	name: "IN1WXL-301034",
+	pipelines: {
+		main: {
+			workers: 8,
+			batch_size: 125,
+			batch_delay: 50,
+			config_reload_automatic: false,
+			config_reload_interval: 3000000000,
+			dead_letter_queue_enabled: false
+		}
+	},
+	os: {
+		name: "Windows 10",
+		arch: "amd64",
+		version: "10.0",
+		available_processors: 8
+	},
+	jvm: {
+		pid: 6184,
+		version: "1.8.0_151",
+		vm_version: "1.8.0_151",
+		vm_vendor: "Oracle Corporation",
+		vm_name: "Java HotSpot(TM) 64-Bit Server VM",
+		start_time_in_millis: 1531729937257,
+		mem: {
+			heap_init_in_bytes: 1073741824,
+			heap_max_in_bytes: 1037959168,
+			non_heap_init_in_bytes: 2555904,
+			non_heap_max_in_bytes: 0
+		},
+		gc_collectors: ["ParNew",
+		"ConcurrentMarkSweep"]
+	}
+}
+```
+### Plugin info API
+This provides information about all Logstash plugins that are currently installed.
+Go to "http://localhost:9600/_node/plugins" see this list.
+```javascript
+{
+	host: "IN1WXL-301034",
+	version: "6.2.4",
+	http_address: "127.0.0.1:9600",
+	id: "19dddf2f-31b7-4e46-88d5-5815bddf38db",
+	name: "IN1WXL-301034",
+	total: 96,
+	plugins: [
+	{ name: "logstash-codec-cef", version: "5.0.2" },
+	{ name: "logstash-codec-json", version: "3.0.5" },
+	{ name: "logstash-codec-multiline", version: "3.0.9" },
+	{ name: "logstash-filter-mutate", version: "3.3.1" },
+	{ name: "logstash-filter-split", version: "3.1.6" },
+	{ name: "logstash-filter-xml", version: "4.0.5" },
+	{ name: "logstash-input-file", version: "4.0.5" },
+	{ name: "logstash-input-kafka", version: "8.0.6" },
+	{ name: "logstash-output-kafka", version: "7.0.10" },
+	{ name: "logstash-output-s3", version: "4.1.1" },
+	{ name: "logstash-output-sns", version: "4.0.7" },
+	{ name: "logstash-output-sqs", version: "5.1.1" }
+	// ...
+    ]
+}
+```
+
+### Node stat API
+Open "http://localhost:9600/_node/stats" to see the Node stats.
 
