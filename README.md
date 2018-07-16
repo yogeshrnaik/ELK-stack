@@ -742,3 +742,34 @@ C:\DDrive\MyData\SWs\Elastic\logstash-6.2.4\lib\bootstrap\environment.rb:6
 	java.util.concurrent.locks.AbstractQueuedSynchronizer.doAcquireSharedNanos(AbstractQueuedSynchronizer.java:1037)
 --------------------------------------------------------------------------------
 ```
+
+# Kibana
+Kibana is an user interface to slice and dice the data loaded in Elastic Search.
+
+## Discover tab
+We will see how we can use the Discover tab in Kibana to search for records from Olympics data we have loaded earlier.
+
+Open Kibana and go to Discover tab. Select the Index pattern "Olympics*" and it will show all the data.
+
+![enter image description here](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/olympics-index.jpg)
+
+To find out all Athletes whose name contains "jack", type "Athlete:Jack*" in the text box provided. This will show the results as below.
+![enter image description here](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/kibana-discover-tab-1.jpg)
+
+At the top, it shows the number of hits.
+The results are shown on the center side and we can see all names containing "Jack" are highlighted by Kibana.
+
+On the left side, we can see different fields from the index. We can add them to the result using the "add" button.
+
+We can have multiple criteria such as:
+```
+Athlete:Jack* AND Year:>2000 AND Gender:WoMen
+```
+The result is shown below.
+![enter image description here](https://raw.githubusercontent.com/yogeshrnaik/ELK-stack/master/images/kibana-discover-tab-2.jpg)
+
+The fields that are added in the result table are shown on the left side.
+And we can remove a field from result table using the "remove" button.
+
+We can save the search criteria and the result using "Save" button on top right corner.
+The saved search can be opened later using "Open" button on top right corner. 
