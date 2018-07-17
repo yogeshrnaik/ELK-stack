@@ -302,6 +302,7 @@ QUERY_NAME: { // MANDATORY
 
 ### Inverted Index
 https://www.elastic.co/guide/en/elasticsearch/guide/current/inverted-index.html
+
 https://www.elastic.co/blog/found-elasticsearch-from-the-bottom-up
 
 ### Analyzers
