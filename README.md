@@ -301,7 +301,8 @@ QUERY_NAME: { // MANDATORY
  - Span Query
 
 ### Inverted Index
-TBA
+https://www.elastic.co/guide/en/elasticsearch/guide/current/inverted-index.html
+https://www.elastic.co/blog/found-elasticsearch-from-the-bottom-up
 
 ### Analyzers
 We can specifiy different types of analyzers for fields when building the index.
